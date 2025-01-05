@@ -1,0 +1,10 @@
+- name: Pacman tasks
+  ansible.builtin.include_tasks:
+    file: '{{ item }}'
+  loop:
+    - config.yaml
+    - caur.yaml
+    - update.yaml
+    - aur.yaml
+    - flatpak.yaml
+    - utils.yaml

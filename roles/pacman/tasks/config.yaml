@@ -1,0 +1,10 @@
+- name: Enable parallel downloads and colors
+  ansible.builtin.lineinfile:
+    path: /etc/pacman.conf
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  loop:
+    - regexp: '^#ParallelDownloads ='
+      line: 'ParallelDownloads = 5'
+    - regexp: '^#Color'
+      line: 'Color'

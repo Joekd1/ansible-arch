@@ -1,0 +1,15 @@
+- name: Install flatpak
+  community.general.pacman:
+    name:
+      - flatpak
+      - xdg-desktop-portal
+
+- name: Add the flathub
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Install flatpak utilities
+  community.general.flatpak:
+    name: com.github.tchx84.Flatseal

@@ -1,0 +1,6 @@
+- name: Install packaging utils
+  community.general.pacman:
+    name:
+      - fwupd
+      - reflector
+      - npm
