@@ -1,0 +1,5 @@
+---
+# variables for dev role
+
+backup_folder: /mnt/Data/backups/dotfiles_arch
+uuid: d7a5d9de-0ca8-43c0-ac0a-bcd66e436a9e 

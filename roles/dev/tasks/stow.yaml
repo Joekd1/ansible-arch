@@ -1,0 +1,12 @@
+- name: Installing stow
+  community.general.pacman:
+    name:
+      - stow
+    state: present
+
+- name: Copying config files
+  ansible.builtin.git:
+    repo: http://git.joelab.lan/joenikushimi/dotfiles.git
+    clone: true
+    dest: /home/joe/dotfiles
+  become_user: joe

@@ -1,0 +1,14 @@
+- name: Installing neovim and utilities
+  community.general.pacman:
+    name:
+      - neovim
+      - ripgrep
+    state: present
+  notify: dev data
+
+- name: Copying nvim config files
+  ansible.builtin.git:
+    repo: http://git.joelab.lan/joenikushimi/nvim.git
+    clone: true
+    dest: /home/joe/.config/nvim
+  become_user: joe

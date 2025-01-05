@@ -1,0 +1,25 @@
+- name: Installing zsh and utilities
+  community.general.pacman:
+    name:
+      - zsh
+      - fzf
+      - zoxide
+    state: present
+  notify:
+    - zsh conf
+    - copy scripts
+    - zoxide conf
+
+- name: Set up env variables
+  ansible.builtin.lineinfile:
+    dest: '/etc/environment'
+    state: present
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  loop:
+    - regexp: '^QT_QPA_PLATFORMTHEME='
+      line: 'QT_QPA_PLATFORMTHEME=qt5ct'
+    - regexp: '^QT_STYLE_OVERRIDE='
+      line: 'QT_STYLE_OVERRIDE=kvantum'
+    - regexp: '^CALIBRE_USE_SYSTEM_THEME='
+      line: 'CALIBRE_USE_SYSTEM_THEME=1'

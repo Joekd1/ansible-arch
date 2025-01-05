@@ -1,0 +1,39 @@
+- name: zsh conf
+  ansible.builtin.shell:
+    cmd: stow zsh
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: copy scripts
+  ansible.builtin.git:
+    repo: http://git.joelab.lan/joenikushimi/scripts.git
+    clone: true
+    dest: /home/joe/scripts
+  become_user: joe
+  notify: stow scripts
+
+- name: stow scripts
+  ansible.builtin.shell:
+    cmd: stow .
+    chdir: /home/joe/scripts
+  become_user: joe
+
+- name: tmux conf
+  ansible.builtin.shell:
+    cmd: stow tmux
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: zoxide conf
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/zoxide'
+    dest: /home/joe/.local/share
+
+- name: dev data
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/{{ item }}'
+    dest: /home/joe
+  loop:
+    - .play
+    - dev
+    - ops

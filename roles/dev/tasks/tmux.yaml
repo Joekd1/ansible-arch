@@ -1,0 +1,26 @@
+- name: Installing tmux
+  community.general.pacman:
+    name: tmux
+    state: present
+
+- name: Install sesh
+  kewlfft.aur.aur:
+    use: paru
+    name: sesh-bin
+  become: true
+  become_user: aur_builder
+
+- name: Installing tmux tpm
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm
+    clone: true
+    dest: /home/joe/.tmux/plugins/tpm
+  become_user: joe
+  notify: tmux conf
+
+- name: Installing Tmuxifier
+  ansible.builtin.git:
+    repo: http://git.joelab.lan/joenikushimi/.tmuxifier.git
+    clone: true
+    dest: /home/joe/.tmuxifier
+  become_user: joe

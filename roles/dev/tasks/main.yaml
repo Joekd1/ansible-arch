@@ -1,0 +1,12 @@
+- name: Dev tasks
+  ansible.builtin.include_tasks:
+    file: '{{ item }}'
+  loop:
+    - data-init.yaml
+    - git.yaml
+    - stow.yaml
+    - shell.yaml
+    - neovim.yaml
+    - tmux.yaml
+    - pomo.yaml
+    - misc.yaml

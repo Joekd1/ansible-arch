@@ -1,0 +1,12 @@
+- name: Installing C utilities
+  community.general.pacman:
+    name:
+      - gdb
+      - valgrind
+    state: present
+
+- name: Installing misc. utilities
+  community.general.pacman:
+    name:
+      - redis
+    state: present
