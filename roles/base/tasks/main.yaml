@@ -1,0 +1,22 @@
+- name: Updating the system
+  community.general.pacman:
+    update_cache: true
+    upgrade: true
+
+- name: Create ansible user
+  ansible.builtin.user:
+    name: ansible
+    groups: root
+
+- name: Add ssh key for the ansible user
+  ansible.posix.authorized_key:
+    user: ansible
+    key: '{{ ssh_key }}'
+
+- name: Add sudoers file for ansible user
+  ansible.builtin.copy:
+    src: sudoer_ansible
+    dest: /etc/sudoers.d/ansible
+    owner: root
+    group: root
+    mode: '0440'
