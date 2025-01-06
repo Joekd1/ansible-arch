@@ -1,0 +1,19 @@
+- name: Install virtualization packages
+  community.general.pacman:
+    name:
+      - libvirt
+      - dnsmasq
+      - openbsd-netcat
+      - dmidecode
+      - virt-manager
+      - virt-viewer
+      - iproute2
+      - vde2
+      - qemu-full
+  notify: start libvirtd
+
+- name: Add user to the libvirt group
+  ansible.builtin.user:
+    name: joe
+    groups: libvirt,kvm
+    append: true

@@ -1,0 +1,14 @@
+- name: Installing docker
+  community.general.pacman:
+    name:
+      - docker
+      - docker-compose
+      - python-pip
+      - python-docker
+  notify: start docker
+
+- name: Add user to the docker group
+  ansible.builtin.user:
+    name: joe
+    groups: docker
+    append: true

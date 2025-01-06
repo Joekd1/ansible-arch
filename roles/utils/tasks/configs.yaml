@@ -1,0 +1,22 @@
+- name: Configure grub
+  ansible.builtin.lineinfile:
+    dest: "/etc/default/grub"
+    state: present
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+  loop:
+    - regexp: "^GRUB_CMDLINE_LINUX_DEFAULT="
+      line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet loglevel=3 systemd.show_status=auto rd.udev.log_level=3"'
+    - regexp: "^GRUB_TIMEOUT="
+      line: "GRUB_TIMEOUT=0"
+    - regexp: "^GRUB_TIMEOUT_STYLE="
+      line: "GRUB_TIMEOUT_STYLE=hidden"
+  notify: update grub
+
+- name: Fix an issue with Wifi error flooding the log
+  ansible.builtin.copy:
+    src: default-wifi-powersave-on.conf
+    dest: /etc/NetworkManager/conf.d/default-wifi-powersave-on.conf
+    owner: root
+    group: root
+    mode: "0644"

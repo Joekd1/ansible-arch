@@ -1,0 +1,16 @@
+- name: Install auto-cpufreq
+  kewlfft.aur.aur:
+    use: paru
+    name:
+      - auto-cpufreq
+  become: true
+  become_user: aur_builder
+  notify: start auto-cpufreq
+
+- name: Copy autocpu freq config
+  ansible.builtin.copy:
+    src: "{{ backup_folder }}/auto-cpufreq.conf"
+    dest: /etc/auto-cpufreq.conf
+    owner: root
+    group: root
+    mode: "0644"

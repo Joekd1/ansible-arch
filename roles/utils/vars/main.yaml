@@ -1,0 +1,5 @@
+---
+# variables for dev role
+#
+
+backup_folder: /mnt/Data/backups/dotfiles_arch

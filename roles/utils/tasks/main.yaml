@@ -1,0 +1,10 @@
+- name: Utils tasks
+  ansible.builtin.include_tasks:
+    file: '{{ item }}'
+  loop:
+    - drivers.yaml
+    - libvirt.yaml
+    - auto-cpufreq.yaml
+    - docker.yaml
+    - configs.yaml
+    - misc.yaml

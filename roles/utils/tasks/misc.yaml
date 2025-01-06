@@ -1,0 +1,102 @@
+- name: Installing automation utilities
+  community.general.pacman:
+    name:
+      - cronie
+      - bottom
+      - ansible
+      - python-pexpect # needed by the ansible expect module
+      - sshpass # needed for ansble non-interactive ssh
+    state: present
+
+- name: Installing security utilities
+  block:
+    - name: Misc security utilities
+      community.general.pacman:
+        name:
+          - gocryptfs
+          - gnupg
+          - polkit
+          - kwallet-pam
+        state: present
+      notify: copy vault
+
+    - name: Installing cotp
+      community.general.pacman:
+        name:
+          - cotp
+        state: present
+      notify: cotp config
+
+- name: Installing file utilities
+  community.general.pacman:
+    name:
+      - unzip
+      - gzip
+      - less
+      - tree
+      - rsync
+      - ncdu
+    state: present
+
+- name: Installing audio utilities
+  community.general.pacman:
+    name:
+      - pamixer
+      - lib32-libpulse # For audio in Lutris video games
+      - pipewire-alsa
+      - bluez
+    state: present
+
+- name: Installing monitoring utilities
+  community.general.pacman:
+    name:
+      - bottom
+      - btop
+      - lm_sensors
+    state: present
+
+- name: Installing documentation utilities
+  community.general.pacman:
+    name:
+      - man-db
+      - man-pages
+    state: present
+
+- name: Installing network/downloads utilities
+  community.general.pacman:
+    name:
+      - curl
+      - yt-dlp
+      - newsboat
+    state: present
+  notify: newsboat conf
+
+- name: Installing screen and clipboard utilities
+  community.general.pacman:
+    name:
+      - gammastep
+      - brightnessctl
+      - grim
+      - wl-clipboard
+    state: present
+  notify: gammastep conf
+
+- name: Install aur packageing utils
+  kewlfft.aur.aur:
+    use: paru
+    name:
+      - topgrade
+      - downgrade
+  notify: topgrade conf
+
+- name: Install aur utilities
+  kewlfft.aur.aur:
+    use: paru
+    name:
+      ## fils utils
+      - nodejs-readability-cli
+      - k2pdfopt
+      ## audio utils
+      - audiorelay
+  become: true
+  become_user: aur_builder

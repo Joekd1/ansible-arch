@@ -1,0 +1,48 @@
+- name: start libvirtd
+  ansible.builtin.service:
+    name: libvirtd
+    state: started
+    enabled: true
+
+- name: start auto-cpufreq
+  ansible.builtin.service:
+    name: auto-cpufreq
+    state: started
+    enabled: true
+
+- name: start docker
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: cotp config
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/cotp'
+    dest: /home/joe/.local/share
+
+- name: gammastep conf
+  ansible.builtin.shell:
+    cmd: stow gammastep
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: newsboat conf
+  ansible.builtin.shell:
+    cmd: stow newsboat
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: topgrade conf
+  ansible.builtin.shell:
+    cmd: stow topgrade
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: copy vault
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/vault'
+    dest: /home/joe
+
+- name: update grub
+  ansible.builtin.command: grub-mkconfig -o /boot/grub/grub.cfg
