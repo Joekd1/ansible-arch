@@ -1,0 +1,40 @@
+- name: Install media utilities
+  community.general.pacman:
+    name:
+      - mpv
+      - bluez
+      - blueman
+      - calibre
+      - nextcloud-client
+  notify: mpv conf
+
+- name: Install aur media packages
+  kewlfft.aur.aur:
+    use: paru
+    name:
+      - jellyfin-mpv-shim
+
+- name: Install flatpak media packages
+  community.general.flatpak:
+    name:
+      - com.stremio.Stremio
+      - com.github.iwalton3.jellyfin-media-player
+      - com.obsproject.Studio
+    state: present
+
+- name: Create the jellyfin dest folder
+  ansible.builtin.file:
+    path: /home/joe/docker/jellyfin
+    owner: joe
+    group: joe
+    mode: "0755"
+    state: directory
+
+- name: Make jellyfin docker-compose file
+  ansible.builtin.template:
+    src: jellyfin-compose.j2
+    dest: /home/joe/docker/jellyfin/docker-compose.yml
+    owner: joe
+    group: joe
+    mode: "0644"
+  notify: jellyfin conf

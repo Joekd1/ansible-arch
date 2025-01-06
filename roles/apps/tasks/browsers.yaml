@@ -1,0 +1,12 @@
+- name: Installing vivaldi
+  community.general.pacman:
+    name:
+      - vivaldi
+      - vivaldi-ffmpeg-codecs
+  notify: vivaldi conf
+
+- name: Installing firefox
+  community.general.pacman:
+    name:
+      - firefox
+  notify: firefox conf

@@ -1,0 +1,140 @@
+- name: copy themes
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/{{ item }}'
+    dest: /home/joe
+  loop:
+    - .themes
+    - .Xresources
+
+- name: alacritty conf
+  ansible.builtin.shell:
+    cmd: stow alacritty
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+  notify: alacritty themes
+
+- name: alacritty themes
+  ansible.builtin.git:
+    repo: https://github.com/alacritty/alacritty-theme
+    clone: true
+    dest: /home/joe/.config/alacritty/themes
+  become_user: joe
+
+- name: kitty conf
+  ansible.builtin.shell:
+    cmd: stow kitty
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: yazi conf
+  ansible.builtin.shell:
+    cmd: stow yazi
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: mpv conf
+  ansible.builtin.shell:
+    cmd: stow mpv
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: waybar conf
+  ansible.builtin.shell:
+    cmd: stow waybar
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: dunst conf
+  ansible.builtin.shell:
+    cmd: stow dunst
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: wofi conf
+  ansible.builtin.shell:
+    cmd: stow wofi
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: sddm conf
+  ansible.builtin.shell:
+    cmd: stow wofi
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: sway conf
+  ansible.builtin.shell:
+    cmd: stow sway
+    chdir: /home/joe/dotfiles/
+  become_user: joe
+
+- name: sddm conf
+  ansible.builtin.copy:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+    owner: '{{ item.owner }}'
+    group: '{{ item.group }}'
+    mode: '{{ item.mode }}'
+  loop:
+    - src: '{{ backup_folder }}/sddm.conf'
+      dest: /etc/sddm.conf
+      owner: root
+      group: root
+      mode: "0644"
+    - src: '{{ backup_folder }}/sugar-dark'
+      dest: /usr/share/sddm/themes/
+      owner: root
+      group: root
+      mode: "0755"
+  notify: start sddm
+
+- name: start sddm
+  ansible.builtin.service:
+    name: sddm
+    state: started
+    enabled: true
+
+- name: vivaldi conf
+  ansible.builtin.file:
+    path: /home/joe/.config/vivaldi/Default
+    state: directory
+    owner: joe
+    group: joe
+    mode: '0755'
+  notify: vivaldi data
+
+- name: vivaldi data
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/Default/'
+    dest: /home/joe/.config/vivaldi/Default
+    delete: true
+
+- name: firefox conf
+  ansible.builtin.file:
+    path: /home/joe/.mozilla/firefox/23l2knjq.Joe
+    state: directory
+    owner: joe
+    group: joe
+    mode: '0755'
+  notify: firefox data
+
+- name: firefox data
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/23l2knjq.Joe/'
+    dest: /home/joe/.mozilla/firefox/23l2knjq.Joe
+    delete: true
+
+- name: jellyfin conf
+  ansible.posix.synchronize:
+    src: '{{ item.src }}'
+    dest: '{{ item.dest }}'
+  loop:
+    - src: '{{ backup_folder }}/jellyfin/config'
+      dest: /home/joe/docker/jellyfin
+    - src: '{{ backup_folder }}/jellyfin/cache'
+      dest: /home/joe/docker/jellyfin
+  notify: jellyfin deploy
+
+- name: jellyfin deploy
+  community.docker.docker_compose_v2:
+    project_src: /home/joe/docker/jellyfin/

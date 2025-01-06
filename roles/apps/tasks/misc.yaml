@@ -1,0 +1,12 @@
+- name: Installing misc apps
+  community.general.pacman:
+    name:
+      - qbittorrent
+      - telegram-desktop
+      - network-manager-applet
+
+- name: Installing gaming utilities
+  community.general.pacman:
+    name:
+      - wine
+      - lutris

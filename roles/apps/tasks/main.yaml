@@ -1,0 +1,14 @@
+- name: Apps tasks
+  ansible.builtin.include_tasks:
+    file: '{{ item }}'
+  loop:
+    - data.yaml
+    - terminals.yaml
+    - thunar.yaml
+    - yazi.yaml
+    - fonts.yaml
+    - themes.yaml
+    - media.yaml
+    - WMs.yaml
+    - browsers.yaml
+    - misc.yaml

@@ -1,0 +1,25 @@
+- name: Install yazi and dependencies
+  community.general.pacman:
+    name:
+      - yazi
+      - ffmpegthumbnailer
+      - jq
+      - poppler
+      - fd
+      - fzf
+      - zoxide
+      - unarchiver
+  notify: yazi conf
+
+- name: Add yazi shell wraper
+  ansible.builtin.blockinfile:
+    path: /home/joe/.zshrc
+    block: |
+      function yy() {
+        local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+        yazi "$@" --cwd-file="$tmp"
+        if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+        cd -- "$cwd"
+        fi
+        rm -f -- "$tmp"
+      }

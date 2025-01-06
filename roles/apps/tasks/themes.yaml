@@ -1,0 +1,13 @@
+- name: Installing themes and utilities
+  community.general.pacman:
+    name:
+      - qt5ct
+      - qt6ct
+      - nwg-look
+      - kvantum
+      - kvantum-qt5
+      - gsettings-desktop-schemas
+      - breeze-icons
+      - breeze
+      - papirus-icon-theme
+  notify: copy themes

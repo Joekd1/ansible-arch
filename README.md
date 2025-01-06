@@ -12,4 +12,5 @@ A collection of ansible roles for managing my personal archlinux install.
 - pacman: Configures *pacman*, *aur* and adds *chaotic aur*, *flatpak* and other packaging utilities.
 - dev: Installs and configures dev packages and utilities. 
 - utils: Sets up *drivers*, *docker*, *virt-manager* and other utilities. 
+- apps: Sets up window managers, file managers, browsers, themes, fonts, and other desktop apps.
 

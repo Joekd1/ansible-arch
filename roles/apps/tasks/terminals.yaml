@@ -1,0 +1,11 @@
+- name: Setting up alacritty
+  community.general.pacman:
+    name:
+      - alacritty
+  notify: alacritty conf
+
+- name: Setting up kitty
+  community.general.pacman:
+    name:
+      - kitty
+  notify: kitty conf

@@ -1,0 +1,16 @@
+- name: Installing fonts
+  community.general.pacman:
+    name:
+      - noto-fonts
+      - ttf-bitstream-vera
+      - ttf-croscore
+      - ttf-dejavu
+      - ttf-ibm-plex
+      - ttf-liberation
+      - ttf-ubuntu-font-family
+      - ttf-anonymous-pro
+      - adobe-source-code-pro-fonts
+      - cantarell-fonts
+      - ttf-ibm-plex
+      - ttf-font-awesome
+      - ttf-jetbrains-mono-nerd

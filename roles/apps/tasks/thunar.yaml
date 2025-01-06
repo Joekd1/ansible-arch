@@ -1,0 +1,10 @@
+- name: Install thunar and utilities
+  community.general.pacman:
+    name:
+      - thunar
+      - thunar-volman
+      - gvfs
+      - gvfs-mtp
+      - tumbler
+      - webp-pixbuf-loader
+      - thunar-media-tags-plugin

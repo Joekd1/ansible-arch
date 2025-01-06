@@ -1,0 +1,37 @@
+- name: Setting up waybar
+  community.general.pacman:
+    name:
+      - waybar
+      - libappindicator-gtk3
+      - libappindicator-gtk2
+  notify: waybar conf
+
+- name: Setting up wofi
+  community.general.pacman:
+    name:
+      - wofi
+  notify: wofi conf
+
+- name: Setting up dunst
+  community.general.pacman:
+    name:
+      - dunst
+  notify: dunst conf
+
+- name: Setting up sway
+  community.general.pacman:
+    name:
+      - sway
+      - xorg-xwayland
+      - swayidle
+      - swaylock
+      - swaybg
+      - xdg-desktop-portal-wlr
+    state: present
+  notify: sway conf
+
+- name: Setting up sddm
+  community.general.pacman:
+    name:
+      - sddm
+  notify: sddm conf

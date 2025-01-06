@@ -1,0 +1,9 @@
+- name: Copy pictures
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/Pictures'
+    dest: /home/joe
+
+- name: Copy documents
+  ansible.posix.synchronize:
+    src: '{{ backup_folder }}/Documents'
+    dest: /home/joe
